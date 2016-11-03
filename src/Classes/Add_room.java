@@ -29,6 +29,9 @@ public class Add_room extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
+		if(session.getAttribute("role").toString().equals("ADMIN"))
+		{
+			
 		String room_no = request.getParameter("room_no");
 		String type =request.getParameter("type");
 		if(new Logic().add_room(room_no,type)) {
@@ -36,7 +39,10 @@ public class Add_room extends HttpServlet {
 		} else {
 			session.setAttribute("result", new Display(Display.Type.ERROR).getHtml("Room could not added"));
 		}
-		response.sendRedirect("admin.jsp");
+		}
+		
+		response.sendRedirect(session.getAttribute("role").toString().toLowerCase().concat(".jsp"));
+		
 	}
 
 	/**

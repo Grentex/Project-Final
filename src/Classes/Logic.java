@@ -30,7 +30,7 @@ public class Logic {
 
 		try {
 			String query = String.format(Query.AUTHENTICATE.toString(), uname, pass);
-			System.out.println(query);
+			
 			
 			ArrayList<HashMap<String, String>> data = database.execute(query);
 			if (data.isEmpty()) {
