@@ -43,6 +43,7 @@ public class Delete extends HttpServlet {
 		} catch (Exception e) {
 			// nothing to do
 			session.setAttribute("result", new Display(Display.Type.ERROR).getHtml(e.getMessage()));
+			response.sendRedirect("admin.jsp");
 		}
 
 	}
