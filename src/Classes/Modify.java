@@ -39,11 +39,12 @@ public class Modify extends HttpServlet {
 
 		try {
 			new Logic().modify_user(role, username, firstname, lastname, password);
+			session.setAttribute("result", new Display(Display.Type.SUCCESS).getHtml("User successfully modified"));
 			response.sendRedirect("admin.jsp");
 		} catch (Exception e) {
 
 			session.setAttribute("result", new Display(Display.Type.ERROR).getHtml(e.getMessage()));
-			// response.sendRedirect("admin.jsp");
+			 response.sendRedirect("admin.jsp");
 		}
 	}
 
