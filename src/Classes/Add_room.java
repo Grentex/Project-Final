@@ -32,13 +32,13 @@ public class Add_room extends HttpServlet {
 		if(session.getAttribute("role").toString().equals("ADMIN"))
 		{
 			
-		String room_no = request.getParameter("room_no");
-		String type =request.getParameter("type");
-		if(new Logic().add_room(room_no,type)) {
-			session.setAttribute("result", new Display(Display.Type.SUCCESS).getHtml("Room added successfully"));
-		} else {
-			session.setAttribute("result", new Display(Display.Type.ERROR).getHtml("Room could not added"));
-		}
+			String room_no = request.getParameter("room_no");
+			String type =request.getParameter("type");
+			if(new Logic().add_room(room_no,type)) {
+				session.setAttribute("result", new Display(Display.Type.SUCCESS).getHtml("Room added successfully"));
+			} else {
+				session.setAttribute("result", new Display(Display.Type.ERROR).getHtml("Room could not added"));
+			}
 		}
 		
 		response.sendRedirect(session.getAttribute("role").toString().toLowerCase().concat(".jsp"));

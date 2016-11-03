@@ -29,36 +29,41 @@ public class AddUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String username = request.getParameter("username").toUpperCase().trim();
-		String password = request.getParameter("password").trim();
-		String fname = request.getParameter("fname").toUpperCase().trim();
-		String lname = request.getParameter("lname").toUpperCase().trim();
-		String role = request.getParameter("role").toUpperCase().trim();
-
 		HttpSession session = request.getSession();
-		if (role.equals("ADMIN") || role.equals("STUDENT") || role.equals("TEACHER")) {
-
-			if (username == null || password == null || fname == null || lname == null || password == " "
-					|| fname == " " || lname == " " || username == " ") {
-				session.setAttribute("add_result",
-						new Display(Display.Type.ERROR).getHtml("All the fields are required to add user."));
-			} else {
-				try {
-					if (new Logic().add_user(username, password, role, fname, lname)) {
-						session.setAttribute("add_result",
-								new Display(Display.Type.SUCCESS).getHtml("User has been added!"));
-					} else {
-						session.setAttribute("add_result",
-								new Display(Display.Type.ERROR).getHtml("Failed to add user!"));
+		
+		if(session.getAttribute("role").toString().equals("ADMIN"))
+		{
+		
+			// TODO Auto-generated method stub
+			String username = request.getParameter("username").toUpperCase().trim();
+			String password = request.getParameter("password").trim();
+			String fname = request.getParameter("fname").toUpperCase().trim();
+			String lname = request.getParameter("lname").toUpperCase().trim();
+			String role = request.getParameter("role").toUpperCase().trim();
+	
+			if (role.equals("ADMIN") || role.equals("STUDENT") || role.equals("TEACHER")) {
+	
+				if (username == null || password == null || fname == null || lname == null || password == " "
+						|| fname == " " || lname == " " || username == " ") {
+					session.setAttribute("add_result",
+							new Display(Display.Type.ERROR).getHtml("All the fields are required to add user."));
+				} else {
+					try {
+						if (new Logic().add_user(username, password, role, fname, lname)) {
+							session.setAttribute("add_result",
+									new Display(Display.Type.SUCCESS).getHtml("User has been added!"));
+						} else {
+							session.setAttribute("add_result",
+									new Display(Display.Type.ERROR).getHtml("Failed to add user!"));
+						}
+					} catch (Exception ex) {
+						session.setAttribute("add_result", new Display(Display.Type.ERROR).getHtml(ex.getMessage()));
 					}
-				} catch (Exception ex) {
-					session.setAttribute("add_result", new Display(Display.Type.ERROR).getHtml(ex.getMessage()));
 				}
+			} else {
+				session.setAttribute("add_result",
+						new Display(Display.Type.ERROR).getHtml("Invalid request please try again!"));
 			}
-		} else {
-			session.setAttribute("add_result",
-					new Display(Display.Type.ERROR).getHtml("Invalid request please try again!"));
 		}
 		response.sendRedirect(session.getAttribute("role").toString().toLowerCase().trim() + ".jsp");
 	}

@@ -29,7 +29,7 @@ public class DeleteRoom extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String room_no = request.getParameter("room_no");
 		HttpSession session = request.getSession();
-		
+				
 		if(new Logic().delte_room(room_no)) {
 			session.setAttribute("result", new Display(Display.Type.SUCCESS).getHtml("Room deleted successfully"));
 		} else {
